@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+<group ns="r1">
+	<env name="TURTLEBOT_3D_Sensor" value="kinect" />
+	<env name="TURTLEBOT_BASE" value="kobuki"/>
+	<include file="$(find turtlebot_bringup)/launch/minimal.launch">
+	</include>
+	<include file="$(find qr_detector)/launch/kinect_launch.launch">
+	</include>
+</group>
+	<include file="$(find qr_detector)/launch/detector.launch">
+	</include> 
+	<node pkg="qr_detector" type="conf_move.py" name="$(anon conf_move)" output="screen">
+	</node>
+</launch>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="nodelet" type="nodelet" name="$(anon qr_detector)"
+          args="standalone qr_detector/qr_detector_nodelet">
+        <remap from="image" to="/r1/kinect/rgb/image_color"/>
+    </node>
+</launch>

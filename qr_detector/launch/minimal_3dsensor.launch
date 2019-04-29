@@ -1,0 +1,9 @@
+<launch>
+	<env name="TURTLEBOT_3D_Sensor" value="kinect" />
+	<env name="TURTLEBOT_BASE" value="kobuki" />
+	<include file="$(find turtlebot_bringup)/launch/minimal.launch">
+	</include>
+
+	<include file="$(find turtlebot_bringup)/launch/3dsensor.launch" />
+
+</launch>
