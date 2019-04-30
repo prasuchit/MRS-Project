@@ -35,7 +35,7 @@ def command_callback(data):
                     return
                 else:
                     if obstacle in maneuver_dict:
-                        if maneuver_dict[obstacle] == "unitialized":
+                        if maneuver_dict[obstacle] == "uninitialized":
                             maneuver_dict[obstacle] = maneuver
                             confidence_matrix[obstacle] = confidence_matrix[obstacle] + trust_matrix[comID]
                             helped_by_robot = True
@@ -64,6 +64,11 @@ def help_callback(help_msg):
 def qr_callback(qrtype):
     global myID, obstacle_encountered, current_obstacle
     [rob_ID, rob_obstacle] = qrtype.data.split(",")
+    #check if the obstacle id is valid
+    if rob_obstacle not in obstacle_list:
+        #print("Obstacle {0} is invalid, not sending clarification request".format(rob_obstacle))
+        return
+
     if rob_ID == myID:
 	print("Here")
 	obstacle_encountered = True
@@ -75,6 +80,7 @@ def execute_maneuver(maneuver):
     global maneuvering
     global velocity_publisher
     maneuvering = True # in QR code, if maneuvering is true, do not detect obstacles!
+    vel_msg = Twist()
     if maneuver == "maneuver_A":
         print("performing maneuver A") #Go straight
 	move()
@@ -178,7 +184,7 @@ if __name__ == '__main__':
 
     # initialize confidence matrix
     trust_list = ["B", "C", "Human"]
-    trust_values = [0.1, 0.5, 1.0]
+    trust_values = [0.5, 0.5, 1.0]
     trust_matrix = dict(zip(trust_list, trust_values))
 
     # intialize robot node
